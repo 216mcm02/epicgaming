@@ -45,11 +45,11 @@
             blendMode: 'ADD'
         });
 
-        var logo = this.physics.add.image(400, 100, 'box');
+        var box = this.physics.add.image(400, 100, 'box');
 
-        logo.setVelocity(100, 200);
-        logo.setBounce(1, 1);
-        logo.setCollideWorldBounds(true);
+        box.setVelocity(100, 200);
+        box.setBounce(1, 1);
+        box.setCollideWorldBounds(true);
 
         emitter.startFollow(box);
     }
