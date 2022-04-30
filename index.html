@@ -26,16 +26,16 @@
 
     function preload ()
     {
-        //this.load.setBaseURL('https://github.com/216mcm02/epicgaming');
+        this.load.setBaseURL('https://raw.githubusercontent.com/216mcm02/epicgaming/main/assets/');
 
-        this.load.image('sky', 'https://raw.githubusercontent.com/216mcm02/epicgaming/main/assets/back/backtest.jpg');
-        this.load.image('box', '/blob/main/assets/char/chartest.jpg');
-        this.load.image('rat', '/blob/main/assets/etc/parttest.png');
+        this.load.image('sky', 'back/backtest.jpg');
+        this.load.image('box', 'char/chartest.jpg');
+        this.load.image('rat', 'etc/parttest.png');
     }
 
     function create ()
     {
-        this.add.image(400, 300, 'sky');
+        this.add.image(800, 600, 'sky');
 
         var particles = this.add.particles('rat');
 
