@@ -35,13 +35,14 @@
 
     function create ()
     {
-        this.add.image(800, 600, 'sky');
+        backround = this.add.image(400, 300, 'sky');
+        backround.scale = 2;
 
         var particles = this.add.particles('rat');
 
         var emitter = particles.createEmitter({
-            speed: 100,
-            scale: { start: 1, end: 0 },
+            speed: 10,
+            scale: { start: .25, end: 0 },
             blendMode: 'ADD'
         });
 
