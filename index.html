@@ -8,9 +8,10 @@
 
 var config = {
     type: Phaser.AUTO,
-    width: 800,
+    width: 1280,
     height: 600,
     pixelArt: true,
+    antialias: false,
     physics: {
         default: 'arcade',
         arcade: {
@@ -23,7 +24,7 @@ var config = {
         preload: preload,
         create: create,
         update: update
-    }
+    },
 };
 
 var game = new Phaser.Game(config);
@@ -39,9 +40,9 @@ function preload (){
     //set base pathing for getting images
     this.load.setBaseURL('https://raw.githubusercontent.com/216mcm02/epicgaming/main/assets/');
     // map made with Tiled in JSON format
-    this.load.tilemapTiledJSON('map', 'newmap1.json');
-    // tiles in png
-    this.load.image('tiles', 'customtiles/customTiles.png', {frameWidth: 32, frameHeight: 32});
+    this.load.tilemapTiledJSON('map', 'attempt2.json');
+    // tiles in spritesheet 
+    this.load.spritesheet('tiles', 'customtiles/customTiles.png', {frameWidth: 32, frameHeight: 32});
     // player animations
     this.load.atlas('player', 'player.png', 'player.json');
 }
@@ -49,12 +50,17 @@ function preload (){
 function create (){
     // load the map 
     map = this.make.tilemap({key: 'map'});
-    // tiles for the ground layer
-    var groundTiles = map.addTilesetImage('tiles');
+    //random thread advice about using tiled
+    var groundTiles =  map.addTilesetImage('customTiles', 'tiles');
+    //// tiles for the ground layer
+    //var groundTiles = map.addTilesetImage('tiles');
     // create the ground layer
-    groundLayer = map.createDynamicLayer('World', groundTiles, 0, 0);
+    groundLayer = map.createDynamicLayer('Tile Layer 1', groundTiles, 0, 0);
+    //zoom in?
+    this.cameras.main.setZoom(1.4);
     // the player will collide with this layer
     groundLayer.setCollisionByExclusion([-1]);
+    // coin image used as tileset
     // set the boundaries of our game world
     this.physics.world.bounds.width = groundLayer.width;
     this.physics.world.bounds.height = groundLayer.height;
@@ -68,9 +74,12 @@ function create (){
     
     // player will collide with the level tiles 
     this.physics.add.collider(groundLayer, player);
-    // when the player overlaps with a tile with index 17, collectCoin 
-    // will be called    
-    //this.physics.add.overlap(player, coinLayer);
+    
+    //shitty if statement
+    // coinLayer.setTileIndexCallback(17, collectCoin, this);
+    // // when the player overlaps with a tile with index 17, collectCoin 
+    // // will be called    
+    // this.physics.add.overlap(player, coinLayer);
 
     // player walk animation
     this.anims.create({
@@ -102,27 +111,28 @@ function create (){
 }
 
 function update (){
-    if ((cursors.space.isDown || cursors.up.isDown) && player.body.onFloor())
-    {
-        player.body.setVelocityY(-500); // jump up
+    var wleft, wright;
+    if (player.body.blocked.right) {
+        // running into a wall on the right
+        wright = true;
+    } else if (player.body.blocked.left) {
+        // running into a wall on the left
+        wleft = true;
     }
-    if (cursors.left.isDown)
-    {
-        player.body.setVelocityX(-200); // move left
-        player.anims.play('walk', true); // play walk animation
-        player.flipX= true; // flip the sprite to the left
-    }
-    else if (cursors.right.isDown)
-    {
-        player.body.setVelocityX(200); // move right
-        player.anims.play('walk', true); // play walk animatio
-        player.flipX = false; // use the original sprite looking to the right
-    } else {
-        player.body.setVelocityX(0);
-        player.anims.play('idle', true);
-    }  
+    
+    //if (cursors.left.isDown && !wleft)
+    //if (cursors.right.isDown && !wright)
+    //(cursors.space.isDown || cursors.up.isDown) && player.body.onFloor()
+    //(cursors.space.isDown || cursors.up.isDown) && (wright || wleft)
+
+    //player.body.setVelocityX() -left +right
+    //player.body.setVelocityY() -up +down
+    //player.anims.play('walk', true) // play walk animation
+    //player.flipX= true
+
 }
-// how define method
+
+//how to make an external funstion work
 // function collectCoin(sprite, tile) {
 //     coinLayer.removeTileAt(tile.x, tile.y); // remove the tile/coin
 //     score ++; // increment the score
