@@ -10,10 +10,11 @@ var config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
+    pixelArt: true,
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 500 },
+            gravity: { y: 800 },
             debug: true
         }
     },
@@ -39,8 +40,8 @@ function preload (){
     this.load.setBaseURL('https://raw.githubusercontent.com/216mcm02/epicgaming/main/assets/');
     // map made with Tiled in JSON format
     this.load.tilemapTiledJSON('map', 'newmap1.json');
-    // tiles in spritesheet 
-    this.load.spritesheet('tiles', 'customtiles/customTiles.png', {frameWidth: 32, frameHeight: 32});
+    // tiles in png
+    this.load.image('tiles', 'customtiles/customTiles.png', {frameWidth: 32, frameHeight: 32});
     // player animations
     this.load.atlas('player', 'player.png', 'player.json');
 }
