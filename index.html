@@ -1,8 +1,43 @@
-var SceneOne = new Phaser.Class({
-    Extends: Phaser.Scene,
-    initialize: function() {
-        Phaser.Scene.call(this, { "key": "testmap1" });
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"
+            src="src/physics/arcade/components/Velocity.js"
+            src="src/physics/arcade/components/Acceleration.js"
+            src="src/physics/arcade/components/Friction.js"
+            src="testmap1.js"
+    ></script> 
+</head>
+<body>
+    <div id="game"></div>
+<script>
+
+const config = {
+    type: Phaser.AUTO,
+    parent: "game", 
+    width: 1280,
+    height: 600,
+    pixelArt: true,
+    antialias: false,
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 800 },
+            debug: true
+        }
     },
+    scene: [SceneOne, SceneTwo]
+    /*
+    {
+        key: 'main',
+        preload: preload,
+        create: create,
+        update: update
+    },
+    */
+};
+
+const game = new Phaser.Game(config);
 /*
 var map;
 var player;
@@ -12,10 +47,9 @@ var text;
 var prevVel;
 var direction;
 var slow;
-*/
-init: function() {},
 
-preload: function() {
+
+function preload (){
     //set base pathing for getting images, set to github
     this.load.setBaseURL('https://raw.githubusercontent.com/216mcm02/epicgaming/main/assets/');
     // map made with Tiled in JSON format
@@ -25,17 +59,9 @@ preload: function() {
     // player animations
     this.load.atlas('player', 'customplayer/customsprite.png', 'customplayer/sprites.json');
     //this.load.image('player', 'customplayer/player1.png');
-},
+}
 
-create: function() {
-    var map;
-    var player;
-    var cursors;
-    var groundLayer;
-    var text;
-    var prevVel;
-    var direction;
-    var slow;
+function create (){
     //load the map 
     map = this.make.tilemap({key: 'map'});
     //initialize tileset
@@ -102,9 +128,9 @@ create: function() {
     this.cameras.main.startFollow(player);
     // set background color    
     this.cameras.main.setBackgroundColor('#ccccff');
-},
+}
 
-update: function() {
+function update (){
     //player.anims.play('', true);
     //swap the direction of animations to match the direction 
     //the player was moving on the prevois frame
@@ -190,4 +216,18 @@ update: function() {
             player.anims.play('cling', true);
         }
     }
-}});
+        
+    
+    //update stored previous velocity for wall boost
+    if(!slow){
+        prevVel = player.body.velocity.x;
+    }
+    //attempt to determine if player velicity is fast enough for tech
+    if(run){
+        slow = false;
+    } else true;
+}
+*/
+</script>
+</body>
+</html>
