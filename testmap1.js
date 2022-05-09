@@ -3,6 +3,14 @@ var SceneOne = new Phaser.Class({
     initialize: function() {
         Phaser.Scene.call(this, { "key": "testmap1" });
     },
+    map: null,
+    player: null,
+    cursors: null,
+    groundLayer: null,
+    text: null,
+    prevVel: null,
+    direction: null,
+    slow: null,
 /*
 var map;
 var player;
